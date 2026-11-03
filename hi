@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mała wiadomość</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0e1226; --asphalt:#1b2040; --beam:#ffd9a0; --paper:#f6ecd9; --tail:#ff4d5e; --mute:#9aa0c0;
+    --display:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+    --body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{
+    background:var(--night); color:var(--paper); font-family:var(--body); font-size:18px; line-height:1.5;
+    overflow-x:hidden;
+    padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  }
+  /* gwiazdy */
+  /* .stars{position:fixed;inset:0;pointer-events:none;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 18%,#fff9 50%,transparent 51%),
+      radial-gradient(1px 1px at 78% 12%,#fff8 50%,transparent 51%),
+      radial-gradient(1.5px 1.5px at 40% 8%,#fff7 50%,transparent 51%),
+      radial-gradient(1px 1px at 90% 40%,#fff6 50%,transparent 51%),
+      radial-gradient(1px 1px at 22% 55%,#fff6 50%,transparent 51%),
+      radial-gradient(1.5px 1.5px at 62% 30%,#fff7 50%,transparent 51%);
+  } */
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 9999;
+  }
+
+  .star {
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      left: var(--x);
+      top: var(--y);
+
+      background: white;
+      border-radius: 50%;
+
+      opacity: var(--opacity);
+      box-shadow: 0 0 6px #ffffffaa;
+
+      animation: twinkle var(--twinkle-duration) ease-in-out infinite;
+      animation-delay: var(--delay);
+  }
+
+  @keyframes twinkle {
+      0%, 100% {
+          opacity: var(--opacity);
+          transform: scale(1);
+      }
+
+      50% {
+          opacity: 0.15;
+          transform: scale(0.5);
+      }
+  }
+
+
+
+
+  /* promień projektora z dołu */
+  .beam{position:fixed;left:50%;bottom:-10vh;width:140vmax;height:90vh;transform:translateX(-50%);pointer-events:none;
+    background:conic-gradient(from 160deg at 50% 100%,transparent 0deg,#ffd9a022 20deg,#ffd9a00d 40deg,transparent 40deg);
+    animation:flicker 5s infinite steps(1);
+  }
+  @keyframes flicker{0%,100%{opacity:1}7%{opacity:.7}9%{opacity:1}52%{opacity:.85}54%{opacity:1}}
+
+  main{position:relative;min-height:100dvh;display:grid;place-items:center;padding:28px 22px}
+  .screen{display:none;width:100%;max-width:520px}
+  .screen.on{display:block}
+
+  h1,h2{font-family:var(--display);font-weight:800;line-height:1.05;letter-spacing:-.02em}
+  h1{font-size:clamp(40px,11vw,60px);margin-bottom:18px}
+  h2{font-size:clamp(30px,8vw,42px);margin-bottom:14px}
+  p{color:var(--paper)}
+  .muted{color:var(--mute);font-size:15px}
+
+  .btn{
+    font:inherit;font-weight:500;cursor:pointer;border:0;border-radius:999px;padding:14px 26px;
+    background:var(--beam);color:var(--night);margin-top:26px;transition:transform .15s,box-shadow .15s;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px #ffd9a033}
+  .btn:active{transform:scale(.97)}
+  .btn.ghost{background:transparent;color:var(--mute);border:1px solid #ffffff2a}
+  .btn.ghost:hover{box-shadow:none;color:var(--paper)}
+  :focus-visible{outline:3px solid var(--tail);outline-offset:3px}
+
+  /* monolog */
+  .lines p{font-family:var(--display);font-weight:500;font-size:clamp(24px,6.4vw,32px);line-height:1.2;margin:0 0 20px;
+    opacity:0;transform:translateY(10px);transition:opacity .8s,transform .8s}
+  .lines p.show{opacity:1;transform:none}
+  .lines p.big{font-weight:800;font-size:clamp(34px,9vw,48px);color:var(--beam)}
+  #next2{opacity:0;pointer-events:none;transition:opacity .6s}
+  #next2.show{opacity:1;pointer-events:auto}
+
+  /* P.S. */
+  .ps{background:var(--asphalt);border-radius:22px;padding:26px 24px;border:1px solid #ffffff14;position:relative}
+  .ps .tag{position:absolute;top:-14px;left:22px;background:var(--tail);color:#fff;font-family:var(--display);font-weight:800;
+    padding:3px 14px;border-radius:8px;transform:rotate(-3deg);font-size:18px}
+  .ps h2{font-size:clamp(26px,7vw,34px);margin-top:6px}
+  .facts{margin:16px 0 4px;display:grid;gap:6px;font-size:16px}
+  .facts b{color:var(--beam);font-weight:500}
+  textarea{
+    width:100%;margin-top:20px;background:var(--night);color:var(--paper);border:1px solid #ffffff22;border-radius:14px;
+    padding:12px 14px;font:inherit;font-size:16px;resize:vertical;min-height:84px;
+  }
+  textarea::placeholder{color:#6b7194}
+  .choices{display:flex;gap:10px;flex-wrap:wrap}
+  .choices .btn{margin-top:16px;flex:1 1 auto}
+  .car{font-size:56px;display:inline-block;margin-bottom:10px;animation:drive 1.4s ease-out both}
+  @keyframes drive{from{transform:translateX(-60vw)}to{transform:none}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.lines p{opacity:1;transform:none}#next2{opacity:1;pointer-events:auto}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="beam"></div>
+
+<main>
+  <!-- 1 -->
+  <section class="screen on" id="s1">
+    <h1><span id="name"></span></h1>
+    <p>Tak to znowu ja. Chwile mnie nie było ale wróciłem żeby dalej ci przeszkadzać w pracy xdd</p>
+    <p class="muted" style="margin-top:14px">Po tym dam ci już spokój frfr ( do trzech razy sztuka cn )</p>
+    <button class="btn" data-go="s2">Alright</button>
+  </section>
+
+  <!-- 2 -->
+  <section class="screen" id="s2">
+    <div class="lines" id="lines">
+      <p>Life is short</p>
+      <p>Come hangout with some random guy</p>
+      <p>Maybe something good will come out but if not at least we will both have a cool story to tell :P</p>
+      <p class="big">We can make some good memories together!!!</p>
+    </div>
+    <button class="btn" id="next2" data-go="s3">Hmmm...</button>
+  </section>
+
+  <!-- 3 -->
+  <section class="screen" id="s3">
+    <div class="ps">
+      <span class="tag">3/3</span>
+      <h2>Robimy ze znajomymi własne kino samochodowe.</h2>
+      <p>I sobie tak pomyślałem że to świetna okazja znowu cie pomęczyćXDD</p>
+    </br>
+      <p>Mamy ogarnięty fajny spocik po środku niczego ( yeah porwe Cie ), projektor, ogarniemy jeszcze jakąś szamke i wszystko co potrzebne</p>
+      <p>Więc jeżeli masz ochotę to zapraszam śmiało ;D</p>
+      <div class="facts">
+        <span><b>Kiedy:</b> 07.11 20:00</span>
+        <span><b>Gdzie:</b> Odbiore Cię spod groszka</span>
+        <span><b>Film:</b> W planach jest scooby doo ale do ustalenia!!</span>
+      </div>
+      <textarea id="note" maxlength="500" placeholder="Możesz zostawić jakąś wiadomość (opcjonalnie)"></textarea>
+      <div class="choices">
+        <button class="btn" data-answer="tak">Lets go!!</button>
+        <button class="btn ghost" data-answer="nie">Spadaj leszczu ;P</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4a -->
+  <section class="screen" id="s-yes">
+    <div class="car">🚗</div>
+    <h2>Yeah!!!</h2>
+    <p>Będę czekał pod groszkiem :D ( jak cos to nie jeżdże ferrari sorka )</p>
+  </section>
+
+  <!-- 4b -->
+  <section class="screen" id="s-no">
+    <h2>No nic</h2>
+    <p>Dzięki tak czy siak :D Dobrej nocki</p>
+  </section>
+</main>
+
+<script>
+  /* ====== USTAWIENIA ====== */
+  const HER_NAME = "Hejcia ;DD";                 // <- wpisz jej imię
+  const ENDPOINT = "https://TWOJ-ENDPOINT-TUTAJ"; // <- np. Formspree / Google Apps Script / własne API
+  /* ======================== */
+
+  document.getElementById('name').textContent = HER_NAME;
+  const $ = s => document.querySelector(s);
+  const show = id => {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+    $('#'+id).classList.add('on');
+    if (id === 's2') playLines();
+  };
+
+  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => show(b.dataset.go)));
+
+  let played = false;
+  function playLines(){
+    if (played) return; played = true;
+    const ps = [...document.querySelectorAll('#lines p')];
+    ps.forEach((p,i) => setTimeout(() => p.classList.add('show'), 500 + i*1500));
+    setTimeout(() => $('#next2').classList.add('show'), 500 + ps.length*1500);
+  }
+
+  document.querySelectorAll('[data-answer]').forEach(b => b.addEventListener('click', async () => {
+    const answer = b.dataset.answer;
+    const payload = { odpowiedz: answer, notatka: $('#note').value.trim(), czas: new Date().toISOString() };
+    show(answer === 'tak' ? 's-yes' : 's-no');
+    try {
+      if (!ENDPOINT.includes('TWOJ-ENDPOINT')) {
+        await fetch(ENDPOINT, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+      } else { console.log('Placeholder – dane do wysłania:', payload); }
+    } catch (e) { console.error(e); }
+  }));
+
+
+  // ===================================
+// KONFIGURACJA
+// ===================================
+
+const STAR_CONFIG = {
+    count: 200,               // Liczba zwykłych gwiazd
+
+    minSize: 1,               // Minimalny rozmiar gwiazdy
+    maxSize: 3,               // Maksymalny rozmiar gwiazdy
+
+    minOpacity: 0.3,          // Minimalna jasność
+    maxOpacity: 1,             // Maksymalna jasność
+
+    twinkleSpeed: 3,           // Szybkość migotania (sekundy)
+    twinkleRandomness: 4,      // Losowość czasu migotania
+
+
+
+};
+
+// ===================================
+// TWORZENIE GWIAZD
+// ===================================
+
+const starsContainer = document.getElementById("stars");
+
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function createStars() {
+    starsContainer.querySelectorAll(".star").forEach(star => star.remove());
+
+    for (let i = 0; i < STAR_CONFIG.count; i++) {
+        const star = document.createElement("div");
+
+        star.className = "star";
+
+        const size = random(
+            STAR_CONFIG.minSize,
+            STAR_CONFIG.maxSize
+        );
+
+        const opacity = random(
+            STAR_CONFIG.minOpacity,
+            STAR_CONFIG.maxOpacity
+        );
+
+        const duration = random(
+            STAR_CONFIG.twinkleSpeed,
+            STAR_CONFIG.twinkleSpeed + STAR_CONFIG.twinkleRandomness
+        );
+
+        star.style.setProperty("--x", `${random(0, 100)}%`);
+        star.style.setProperty("--y", `${random(0, 100)}%`);
+        star.style.setProperty("--size", `${size}px`);
+        star.style.setProperty("--opacity", opacity);
+        star.style.setProperty("--twinkle-duration", `${duration}s`);
+        star.style.setProperty("--delay", `${random(0, duration)}s`);
+
+        starsContainer.appendChild(star);
+    }
+  }
+
+  // ===================================
+  // SPADAJĄCE GWIAZDY
+  // ===================================
+
+
+
+  // ===================================
+  // URUCHOMIENIE
+  // ===================================
+
+  createStars();
+
+
+
+
+</script>
+</body>
+</html>
