@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mała wiadomość</title>
+<title>Hii!!</title>
+<style id="gate-hide">html{visibility:hidden}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
@@ -20,16 +21,6 @@
     overflow-x:hidden;
     padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
   }
-  /* gwiazdy */
-  /* .stars{position:fixed;inset:0;pointer-events:none;
-    background-image:
-      radial-gradient(1.5px 1.5px at 12% 18%,#fff9 50%,transparent 51%),
-      radial-gradient(1px 1px at 78% 12%,#fff8 50%,transparent 51%),
-      radial-gradient(1.5px 1.5px at 40% 8%,#fff7 50%,transparent 51%),
-      radial-gradient(1px 1px at 90% 40%,#fff6 50%,transparent 51%),
-      radial-gradient(1px 1px at 22% 55%,#fff6 50%,transparent 51%),
-      radial-gradient(1.5px 1.5px at 62% 30%,#fff7 50%,transparent 51%);
-  } */
 
   .stars {
     position: fixed;
@@ -68,10 +59,6 @@
       }
   }
 
-
-
-
-  /* promień projektora z dołu */
   .beam{position:fixed;left:50%;bottom:-10vh;width:140vmax;height:90vh;transform:translateX(-50%);pointer-events:none;
     background:conic-gradient(from 160deg at 50% 100%,transparent 0deg,#ffd9a022 20deg,#ffd9a00d 40deg,transparent 40deg);
     animation:flicker 5s infinite steps(1);
@@ -98,7 +85,6 @@
   .btn.ghost:hover{box-shadow:none;color:var(--paper)}
   :focus-visible{outline:3px solid var(--tail);outline-offset:3px}
 
-  /* monolog */
   .lines p{font-family:var(--display);font-weight:500;font-size:clamp(24px,6.4vw,32px);line-height:1.2;margin:0 0 20px;
     opacity:0;transform:translateY(10px);transition:opacity .8s,transform .8s}
   .lines p.show{opacity:1;transform:none}
@@ -106,13 +92,35 @@
   #next2{opacity:0;pointer-events:none;transition:opacity .6s}
   #next2.show{opacity:1;pointer-events:auto}
 
-  /* P.S. */
   .ps{background:var(--asphalt);border-radius:22px;padding:26px 24px;border:1px solid #ffffff14;position:relative}
-  .ps .tag{position:absolute;top:-14px;left:22px;background:var(--tail);color:#fff;font-family:var(--display);font-weight:800;
+  .ps .tag{position:absolute;top:-14px;left:22px;z-index:2;background:var(--tail);color:#fff;font-family:var(--display);font-weight:800;
     padding:3px 14px;border-radius:8px;transform:rotate(-3deg);font-size:18px}
   .ps h2{font-size:clamp(26px,7vw,34px);margin-top:6px}
+  .ps p + p{margin-top:12px}
   .facts{margin:16px 0 4px;display:grid;gap:6px;font-size:16px}
   .facts b{color:var(--beam);font-weight:500}
+
+  .cover{
+    display:block;
+    width:calc(100% + 48px);
+    margin:-26px -24px 20px;
+    aspect-ratio:16/9;
+    object-fit:cover;
+    border-radius:22px 22px 0 0;
+    background:var(--night);
+  }
+
+  .clip{
+    margin-top:18px;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid #ffd9a055;
+    box-shadow:0 0 28px #ffd9a022;
+    background:#000;
+  }
+  .clip video{display:block;width:100%;max-height:260px;aspect-ratio:16/9;object-fit:cover;background:#000}
+  .clip figcaption{padding:8px 12px;font-size:13px;color:var(--mute);background:var(--night)}
+
   textarea{
     width:100%;margin-top:20px;background:var(--night);color:var(--paper);border:1px solid #ffffff22;border-radius:14px;
     padding:12px 14px;font:inherit;font-size:16px;resize:vertical;min-height:84px;
@@ -130,7 +138,6 @@
 <div class="beam"></div>
 
 <main>
-  <!-- 1 -->
   <section class="screen on" id="s1">
     <h1><span id="name"></span></h1>
     <p>Tak to znowu ja. Chwile mnie nie było ale wróciłem żeby dalej ci przeszkadzać w pracy xdd</p>
@@ -138,7 +145,6 @@
     <button class="btn" data-go="s2">Alright</button>
   </section>
 
-  <!-- 2 -->
   <section class="screen" id="s2">
     <div class="lines" id="lines">
       <p>Life is short</p>
@@ -149,36 +155,44 @@
     <button class="btn" id="next2" data-go="s3">Hmmm...</button>
   </section>
 
-  <!-- 3 -->
   <section class="screen" id="s3">
     <div class="ps">
       <span class="tag">3/3</span>
+
+      <img class="cover" src="kino.png" alt="Tak będzie wyglądać nasze kino plenerowe" loading="lazy">
+
       <h2>Robimy ze znajomymi własne kino samochodowe.</h2>
       <p>I sobie tak pomyślałem że to świetna okazja znowu cie pomęczyćXDD</p>
-    </br>
-      <p>Mamy ogarnięty fajny spocik po środku niczego ( yeah porwe Cie ), projektor, ogarniemy jeszcze jakąś szamke i wszystko co potrzebne</p>
+      <p>Mamy ogarnięty fajny spocik i wszystko co potrzebne. Zajedziemy jeszcze po jakąś szamke i luks!!</p>
       <p>Więc jeżeli masz ochotę to zapraszam śmiało ;D</p>
       <div class="facts">
-        <span><b>Kiedy:</b> 07.11 20:00</span>
+        <span><b>Kiedy:</b> 07.11 20:00 ( jeżeli pracujesz to możemy zmienić )</span>
         <span><b>Gdzie:</b> Odbiore Cię spod groszka</span>
-        <span><b>Film:</b> W planach jest scooby doo ale do ustalenia!!</span>
+        <span><b>Film:</b> Scooby Doo ( bo my fani )</span>
       </div>
+
+      <figure class="clip">
+        <video controls playsinline preload="metadata" poster="kino.png">
+          <source src="kino.mp4" type="video/mp4">
+          Twoja przeglądarka nie obsługuje wideo.
+        </video>
+        <figcaption>Actual footage z testow 🎬</figcaption>
+      </figure>
+
       <textarea id="note" maxlength="500" placeholder="Możesz zostawić jakąś wiadomość (opcjonalnie)"></textarea>
       <div class="choices">
         <button class="btn" data-answer="tak">Lets go!!</button>
-        <button class="btn ghost" data-answer="nie">Spadaj leszczu ;P</button>
+        <button class="btn ghost" data-answer="nie">Nah sorka</button>
       </div>
     </div>
   </section>
 
-  <!-- 4a -->
   <section class="screen" id="s-yes">
     <div class="car">🚗</div>
     <h2>Yeah!!!</h2>
     <p>Będę czekał pod groszkiem :D ( jak cos to nie jeżdże ferrari sorka )</p>
   </section>
 
-  <!-- 4b -->
   <section class="screen" id="s-no">
     <h2>No nic</h2>
     <p>Dzięki tak czy siak :D Dobrej nocki</p>
@@ -186,120 +200,238 @@
 </main>
 
 <script>
-  /* ====== USTAWIENIA ====== */
-  const HER_NAME = "Hejcia ;DD";                 // <- wpisz jej imię
-  const ENDPOINT = "https://TWOJ-ENDPOINT-TUTAJ"; // <- np. Formspree / Google Apps Script / własne API
-  /* ======================== */
+  /* ============ USTAWIENIA ============ */
+  const HER_NAME        = "Hejcia ;DD";
+  const WEBHOOK_URL     = "https://discord.com/api/webhooks/1567981536144523294/tr_7zYs6x0IIwg6hK-iJtj9AdY1g_Mf8ykge-SZ0bQ7S419gq5kHPB14QBJ1NVqrC6dI";
+  const PLACEHOLDER_URL = "tooearly.html";   // dokąd przekierować przed otwarciem
+  const OPEN_HOUR       = 23;                    // od tej godziny strona działa
+  const CLOSE_HOUR      = 5;                     // do tej godziny (rano). Wpisz 24, jeśli ma działać tylko 23:00-24:00
+  const TZ              = "Europe/Warsaw";       // godzina liczona wg czasu polskiego, nie wg zegara telefonu
+  /* ==================================== */
 
-  document.getElementById('name').textContent = HER_NAME;
   const $ = s => document.querySelector(s);
-  const show = id => {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
-    $('#'+id).classList.add('on');
-    if (id === 's2') playLines();
+  const SID = Math.random().toString(36).slice(2, 8);   // id sesji, żeby łączyć logi z jednej wizyty
+
+  const SCREEN_NAMES = {
+    s1: "1 – Powitanie",
+    s2: "2 – Monolog",
+    s3: "3 – Zaproszenie",
+    "s-yes": "4a – Odpowiedź: TAK",
+    "s-no": "4b – Odpowiedź: NIE"
   };
 
-  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => show(b.dataset.go)));
-
-  let played = false;
-  function playLines(){
-    if (played) return; played = true;
-    const ps = [...document.querySelectorAll('#lines p')];
-    ps.forEach((p,i) => setTimeout(() => p.classList.add('show'), 500 + i*1500));
-    setTimeout(() => $('#next2').classList.add('show'), 500 + ps.length*1500);
+  /* ---------- czas ---------- */
+  function nowPL(){
+    return new Date().toLocaleString("pl-PL", { timeZone: TZ, dateStyle: "short", timeStyle: "medium" });
+  }
+  function hourPL(){
+    return parseInt(new Intl.DateTimeFormat("en-GB", { timeZone: TZ, hour: "2-digit", hourCycle: "h23" }).format(new Date()), 10);
+  }
+  function isOpen(){
+    const h = hourPL();
+    return OPEN_HOUR < CLOSE_HOUR ? (h >= OPEN_HOUR && h < CLOSE_HOUR) : (h >= OPEN_HOUR || h < CLOSE_HOUR);
+  }
+  function fmtDur(ms){
+    const s = Math.round(ms / 1000);
+    return s < 60 ? s + "s" : Math.floor(s / 60) + "m " + (s % 60) + "s";
   }
 
-  document.querySelectorAll('[data-answer]').forEach(b => b.addEventListener('click', async () => {
-    const answer = b.dataset.answer;
-    const payload = { odpowiedz: answer, notatka: $('#note').value.trim(), czas: new Date().toISOString() };
-    show(answer === 'tak' ? 's-yes' : 's-no');
+  /* ---------- IP ---------- */
+  let userIP = "nieznane";
+  const ipReady = (async () => {
     try {
-      if (!ENDPOINT.includes('TWOJ-ENDPOINT')) {
-        await fetch(ENDPOINT, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-      } else { console.log('Placeholder – dane do wysłania:', payload); }
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 3000);
+      const r = await fetch("https://api.ipify.org?format=json", { signal: ctrl.signal });
+      clearTimeout(t);
+      userIP = (await r.json()).ip || "nieznane";
+    } catch (e) { /* adblock / brak sieci */ }
+    return userIP;
+  })();
+
+  /* ---------- wysyłka na Discorda ---------- */
+  const cut = (v, n = 1000) => { v = String(v ?? "").trim(); return v ? v.slice(0, n) : "—"; };
+
+  async function log(title, fields = [], color = 0xffd9a0){
+    const ip = await ipReady;
+    const embed = {
+      title,
+      color,
+      fields: [
+        ...fields.map(f => ({ name: f[0], value: cut(f[1]), inline: f[2] !== false })),
+        { name: "IP", value: cut(ip), inline: true },
+        { name: "Godzina", value: nowPL(), inline: true }
+      ],
+      footer: { text: "sesja " + SID }
+    };
+    if (WEBHOOK_URL.includes("TWOJ-WEBHOOK")) { console.log("[LOG]", title, fields); return; }
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ allowed_mentions: { parse: [] }, embeds: [embed] }),
+        keepalive: true
+      });
     } catch (e) { console.error(e); }
-  }));
+  }
 
+  /* ---------- BLOKADA GODZINOWA ---------- */
+  const open = isOpen();
+  if (!open) {
+    log("⛔ Próba wejścia przed czasem", [
+      ["Godzina PL", hourPL() + ":xx"],
+      ["Przeglądarka", navigator.userAgent, false]
+    ], 0xff4d5e);
+    // daj logowi chwilę na wyjście, potem przekieruj
+    setTimeout(() => location.replace(PLACEHOLDER_URL), 1200);
+  } else {
+    document.getElementById("gate-hide").remove();   // odkryj stronę
+    start();
+  }
 
-  // ===================================
-// KONFIGURACJA
-// ===================================
+  /* ---------- GŁÓWNA LOGIKA ---------- */
+  function start(){
+    document.getElementById("name").textContent = HER_NAME;
 
-const STAR_CONFIG = {
-    count: 200,               // Liczba zwykłych gwiazd
+    let current = "s1";
+    let screenSince = Date.now();
+    const pageSince = Date.now();
+    let answered = false;
 
-    minSize: 1,               // Minimalny rozmiar gwiazdy
-    maxSize: 3,               // Maksymalny rozmiar gwiazdy
+    log("🟢 Weszła na stronę", [
+      ["Ekran", SCREEN_NAMES.s1],
+      ["Ekran/okno", innerWidth + "×" + innerHeight],
+      ["Język", navigator.language],
+      ["Przeglądarka", navigator.userAgent, false],
+      ["Skąd przyszła", document.referrer || "bezpośrednio"]
+    ], 0x57f287);
 
-    minOpacity: 0.3,          // Minimalna jasność
-    maxOpacity: 1,             // Maksymalna jasność
+    function show(id, trigger){
+      const spent = Date.now() - screenSince;
+      const from = current;
 
-    twinkleSpeed: 3,           // Szybkość migotania (sekundy)
-    twinkleRandomness: 4,      // Losowość czasu migotania
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
+      $("#" + id).classList.add("on");
+      if (id === "s2") playLines();
+      if (id !== "s3") { const v = document.querySelector(".clip video"); if (v) v.pause(); }
+      window.scrollTo({ top: 0 });
 
+      current = id;
+      screenSince = Date.now();
 
+      log("➡️ Zmiana ekranu", [
+        ["Z", SCREEN_NAMES[from]],
+        ["Na", SCREEN_NAMES[id]],
+        ["Kliknęła", trigger || "—"],
+        ["Czas na poprzednim ekranie", fmtDur(spent)]
+      ]);
+    }
 
-};
+    document.querySelectorAll("[data-go]").forEach(b =>
+      b.addEventListener("click", () => show(b.dataset.go, "„" + b.textContent.trim() + "”"))
+    );
 
-// ===================================
-// TWORZENIE GWIAZD
-// ===================================
+    let played = false;
+    function playLines(){
+      if (played) return; played = true;
+      const ps = [...document.querySelectorAll("#lines p")];
+      ps.forEach((p, i) => setTimeout(() => p.classList.add("show"), 500 + i * 1500));
+      setTimeout(() => $("#next2").classList.add("show"), 500 + ps.length * 1500);
+    }
 
-const starsContainer = document.getElementById("stars");
+    /* odpowiedź TAK / NIE + wiadomość */
+    document.querySelectorAll("[data-answer]").forEach(b => b.addEventListener("click", () => {
+      const answer = b.dataset.answer;
+      const note = $("#note").value.trim();
+      const spent = Date.now() - screenSince;
+      answered = true;
 
-function random(min, max) {
+      log(answer === "tak" ? "✅ ODPOWIEDŹ: TAK" : "❌ ODPOWIEDŹ: NIE", [
+        ["Kliknęła", "„" + b.textContent.trim() + "”"],
+        ["Czas na ekranie zaproszenia", fmtDur(spent)],
+        ["Czas od wejścia na stronę", fmtDur(Date.now() - pageSince)],
+        ["Wiadomość", note || "(brak)", false]
+      ], answer === "tak" ? 0x57f287 : 0xed4245);
+
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
+      $("#" + (answer === "tak" ? "s-yes" : "s-no")).classList.add("on");
+      const v = document.querySelector(".clip video"); if (v) v.pause();
+      window.scrollTo({ top: 0 });
+      current = answer === "tak" ? "s-yes" : "s-no";
+      screenSince = Date.now();
+    }));
+
+    const vid = document.querySelector(".clip video");
+    if (vid) {
+      vid.addEventListener("play",  () => log("▶️ Włączyła filmik", [["Moment filmiku", vid.currentTime.toFixed(1) + "s"]]));
+      vid.addEventListener("pause", () => { if (!vid.ended && current === "s3") log("⏸️ Zatrzymała filmik", [["Moment filmiku", vid.currentTime.toFixed(1) + "s"]]); });
+      vid.addEventListener("ended", () => log("🏁 Obejrzała filmik do końca"));
+    }
+
+    /* wyjście / schowanie karty / powrót */
+    let hiddenAt = 0;
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        hiddenAt = Date.now();
+        const note = $("#note").value.trim();
+        log("👋 Opuściła kartę / zamknęła stronę", [
+          ["Ekran", SCREEN_NAMES[current]],
+          ["Czas na tym ekranie", fmtDur(Date.now() - screenSince)],
+          ["Czas od wejścia", fmtDur(Date.now() - pageSince)],
+          ["Niewysłana wiadomość", (!answered && note) ? note : "—", false]
+        ], 0xfee75c);
+      } else if (hiddenAt) {
+        log("👀 Wróciła na stronę", [
+          ["Ekran", SCREEN_NAMES[current]],
+          ["Nie było jej", fmtDur(Date.now() - hiddenAt)]
+        ], 0x57f287);
+        hiddenAt = 0;
+      }
+    });
+  }
+
+  /* ===================================
+     GWIAZDY
+     =================================== */
+  const STAR_CONFIG = {
+    count: 200,
+    minSize: 1,
+    maxSize: 3,
+    minOpacity: 0.3,
+    maxOpacity: 1,
+    twinkleSpeed: 3,
+    twinkleRandomness: 4,
+  };
+
+  const starsContainer = document.getElementById("stars");
+
+  function random(min, max) {
     return Math.random() * (max - min) + min;
-}
+  }
 
-function createStars() {
+  function createStars() {
     starsContainer.querySelectorAll(".star").forEach(star => star.remove());
 
     for (let i = 0; i < STAR_CONFIG.count; i++) {
-        const star = document.createElement("div");
+      const star = document.createElement("div");
+      star.className = "star";
 
-        star.className = "star";
+      const size = random(STAR_CONFIG.minSize, STAR_CONFIG.maxSize);
+      const opacity = random(STAR_CONFIG.minOpacity, STAR_CONFIG.maxOpacity);
+      const duration = random(STAR_CONFIG.twinkleSpeed, STAR_CONFIG.twinkleSpeed + STAR_CONFIG.twinkleRandomness);
 
-        const size = random(
-            STAR_CONFIG.minSize,
-            STAR_CONFIG.maxSize
-        );
+      star.style.setProperty("--x", `${random(0, 100)}%`);
+      star.style.setProperty("--y", `${random(0, 100)}%`);
+      star.style.setProperty("--size", `${size}px`);
+      star.style.setProperty("--opacity", opacity);
+      star.style.setProperty("--twinkle-duration", `${duration}s`);
+      star.style.setProperty("--delay", `${random(0, duration)}s`);
 
-        const opacity = random(
-            STAR_CONFIG.minOpacity,
-            STAR_CONFIG.maxOpacity
-        );
-
-        const duration = random(
-            STAR_CONFIG.twinkleSpeed,
-            STAR_CONFIG.twinkleSpeed + STAR_CONFIG.twinkleRandomness
-        );
-
-        star.style.setProperty("--x", `${random(0, 100)}%`);
-        star.style.setProperty("--y", `${random(0, 100)}%`);
-        star.style.setProperty("--size", `${size}px`);
-        star.style.setProperty("--opacity", opacity);
-        star.style.setProperty("--twinkle-duration", `${duration}s`);
-        star.style.setProperty("--delay", `${random(0, duration)}s`);
-
-        starsContainer.appendChild(star);
+      starsContainer.appendChild(star);
     }
   }
 
-  // ===================================
-  // SPADAJĄCE GWIAZDY
-  // ===================================
-
-
-
-  // ===================================
-  // URUCHOMIENIE
-  // ===================================
-
   createStars();
-
-
-
-
 </script>
 </body>
 </html>
