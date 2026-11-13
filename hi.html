@@ -3,398 +3,275 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Hii!!</title>
+<title></title>
 <style id="gate-hide">html{visibility:hidden}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --night:#0e1226; --asphalt:#1b2040; --beam:#ffd9a0; --paper:#f6ecd9; --tail:#ff4d5e; --mute:#9aa0c0;
-    --display:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+  :root {
+    --night:#0e1226;
+    --paper:#f6ecd9;
+    --beam:#ffd9a0;
+    --mute:#9aa0c0;
     --body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   }
-  *{box-sizing:border-box;margin:0}
-  html,body{height:100%}
-  body{
-    background:var(--night); color:var(--paper); font-family:var(--body); font-size:18px; line-height:1.5;
+  * { box-sizing:border-box; margin:0; }
+  html, body { min-height:100%; }
+  body {
+    min-height:100dvh;
+    background:var(--night);
+    color:var(--paper);
+    font-family:var(--body);
+    font-size:16px;
+    display:grid;
+    place-items:center;
+    padding:24px;
     overflow-x:hidden;
-    padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
   }
-
   .stars {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 9999;
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
   }
-
   .star {
-      position: absolute;
-      width: var(--size);
-      height: var(--size);
-      left: var(--x);
-      top: var(--y);
-
-      background: white;
-      border-radius: 50%;
-
-      opacity: var(--opacity);
-      box-shadow: 0 0 6px #ffffffaa;
-
-      animation: twinkle var(--twinkle-duration) ease-in-out infinite;
-      animation-delay: var(--delay);
+    position:absolute;
+    width:var(--size);
+    height:var(--size);
+    left:var(--x);
+    top:var(--y);
+    background:white;
+    border-radius:50%;
+    opacity:var(--opacity);
+    box-shadow:0 0 6px #ffffffaa;
+    animation:twinkle var(--twinkle-duration) ease-in-out infinite;
+    animation-delay:var(--delay);
   }
-
   @keyframes twinkle {
-      0%, 100% {
-          opacity: var(--opacity);
-          transform: scale(1);
-      }
-
-      50% {
-          opacity: 0.15;
-          transform: scale(0.5);
-      }
+    0%,100% { opacity:var(--opacity); transform:scale(1); }
+    50% { opacity:.15; transform:scale(.5); }
   }
-
-  .beam{position:fixed;left:50%;bottom:-10vh;width:140vmax;height:90vh;transform:translateX(-50%);pointer-events:none;
+  .beam {
+    position:fixed;
+    left:50%;
+    bottom:-10vh;
+    width:140vmax;
+    height:90vh;
+    transform:translateX(-50%);
+    pointer-events:none;
     background:conic-gradient(from 160deg at 50% 100%,transparent 0deg,#ffd9a022 20deg,#ffd9a00d 40deg,transparent 40deg);
     animation:flicker 5s infinite steps(1);
+    z-index:0;
   }
-  @keyframes flicker{0%,100%{opacity:1}7%{opacity:.7}9%{opacity:1}52%{opacity:.85}54%{opacity:1}}
-
-  main{position:relative;min-height:100dvh;display:grid;place-items:center;padding:28px 22px}
-  .screen{display:none;width:100%;max-width:520px}
-  .screen.on{display:block}
-
-  h1,h2{font-family:var(--display);font-weight:800;line-height:1.05;letter-spacing:-.02em}
-  h1{font-size:clamp(40px,11vw,60px);margin-bottom:18px}
-  h2{font-size:clamp(30px,8vw,42px);margin-bottom:14px}
-  p{color:var(--paper)}
-  .muted{color:var(--mute);font-size:15px}
-
-  .btn{
-    font:inherit;font-weight:500;cursor:pointer;border:0;border-radius:999px;padding:14px 26px;
-    background:var(--beam);color:var(--night);margin-top:26px;transition:transform .15s,box-shadow .15s;
+  @keyframes flicker {
+    0%,100% { opacity:1; }
+    7% { opacity:.7; }
+    9% { opacity:1; }
+    52% { opacity:.85; }
+    54% { opacity:1; }
   }
-  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px #ffd9a033}
-  .btn:active{transform:scale(.97)}
-  .btn.ghost{background:transparent;color:var(--mute);border:1px solid #ffffff2a}
-  .btn.ghost:hover{box-shadow:none;color:var(--paper)}
-  :focus-visible{outline:3px solid var(--tail);outline-offset:3px}
-
-  .lines p{font-family:var(--display);font-weight:500;font-size:clamp(24px,6.4vw,32px);line-height:1.2;margin:0 0 20px;
-    opacity:0;transform:translateY(10px);transition:opacity .8s,transform .8s}
-  .lines p.show{opacity:1;transform:none}
-  .lines p.big{font-weight:800;font-size:clamp(34px,9vw,48px);color:var(--beam)}
-  #next2{opacity:0;pointer-events:none;transition:opacity .6s}
-  #next2.show{opacity:1;pointer-events:auto}
-
-  .ps{background:var(--asphalt);border-radius:22px;padding:26px 24px;border:1px solid #ffffff14;position:relative}
-  .ps .tag{position:absolute;top:-14px;left:22px;z-index:2;background:var(--tail);color:#fff;font-family:var(--display);font-weight:800;
-    padding:3px 14px;border-radius:8px;transform:rotate(-3deg);font-size:18px}
-  .ps h2{font-size:clamp(26px,7vw,34px);margin-top:6px}
-  .ps p + p{margin-top:12px}
-  .facts{margin:16px 0 4px;display:grid;gap:6px;font-size:16px}
-  .facts b{color:var(--beam);font-weight:500}
-
-  .cover{
+  .message-box {
+    position:relative;
+    z-index:1;
+    width:min(100%,520px);
+  }
+  textarea {
     display:block;
-    width:calc(100% + 48px);
-    margin:-26px -24px 20px;
-    aspect-ratio:16/9;
-    object-fit:cover;
-    border-radius:22px 22px 0 0;
-    background:var(--night);
-  }
-
-  .clip{
-    margin-top:18px;
+    width:100%;
+    min-height:120px;
+    resize:vertical;
+    padding:14px 16px;
+    border:1px solid #ffffff35;
     border-radius:14px;
-    overflow:hidden;
-    border:1px solid #ffd9a055;
-    box-shadow:0 0 28px #ffd9a022;
-    background:#000;
+    background:#0e1226eF;
+    color:var(--paper);
+    font:inherit;
+    outline:none;
   }
-  .clip video{display:block;width:100%;max-height:260px;aspect-ratio:16/9;object-fit:cover;background:#000}
-  .clip figcaption{padding:8px 12px;font-size:13px;color:var(--mute);background:var(--night)}
-
-  textarea{
-    width:100%;margin-top:20px;background:var(--night);color:var(--paper);border:1px solid #ffffff22;border-radius:14px;
-    padding:12px 14px;font:inherit;font-size:16px;resize:vertical;min-height:84px;
+  textarea::placeholder { color:#9aa0c0; }
+  textarea:focus { border-color:var(--beam); }
+  button {
+    display:block;
+    margin:12px 0 0 auto;
+    padding:11px 22px;
+    border:0;
+    border-radius:999px;
+    background:var(--beam);
+    color:var(--night);
+    font:inherit;
+    font-weight:500;
+    cursor:pointer;
   }
-  textarea::placeholder{color:#6b7194}
-  .choices{display:flex;gap:10px;flex-wrap:wrap}
-  .choices .btn{margin-top:16px;flex:1 1 auto}
-  .car{font-size:56px;display:inline-block;margin-bottom:10px;animation:drive 1.4s ease-out both}
-  @keyframes drive{from{transform:translateX(-60vw)}to{transform:none}}
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.lines p{opacity:1;transform:none}#next2{opacity:1;pointer-events:auto}}
+  button:disabled { opacity:.6; cursor:wait; }
+  @media (prefers-reduced-motion:reduce) {
+    *,*::before,*::after { animation:none!important; transition:none!important; }
+  }
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
 <div class="beam"></div>
 
-<main>
-  <section class="screen on" id="s1">
-    <h1><span id="name"></span></h1>
-    <p>Tak to znowu ja. Chwile mnie nie było ale wróciłem żeby dalej ci przeszkadzać w pracy xdd</p>
-    <p class="muted" style="margin-top:14px">Po tym dam ci już spokój frfr ( do trzech razy sztuka cn )</p>
-    <button class="btn" data-go="s2">Alright</button>
-  </section>
-
-  <section class="screen" id="s2">
-    <div class="lines" id="lines">
-      <p>Life is short</p>
-      <p>Come hangout with some random guy</p>
-      <p>Maybe something good will come out but if not at least we will both have a cool story to tell :P</p>
-      <p class="big">We can make some good memories together!!!</p>
-    </div>
-    <button class="btn" id="next2" data-go="s3">Hmmm...</button>
-  </section>
-
-  <section class="screen" id="s3">
-    <div class="ps">
-      <span class="tag">3/3</span>
-
-      <img class="cover" src="kino.png" alt="Tak będzie wyglądać nasze kino plenerowe" loading="lazy">
-
-      <h2>Robimy ze znajomymi własne kino samochodowe.</h2>
-      <p>I sobie tak pomyślałem że to świetna okazja znowu cie pomęczyćXDD</p>
-      <p>Mamy ogarnięty fajny spocik i wszystko co potrzebne. Zajedziemy jeszcze po jakąś szamke i luks!!</p>
-      <p>Więc jeżeli masz ochotę to zapraszam śmiało ;D</p>
-    </br>
-      <p>Jeżeli godzina / miejsce ci nie pasuje to napisz co i jak!!</p>
-      <div class="facts">
-        <span><b>Kiedy:</b> 13.11 22:00</span>
-        <span><b>Gdzie:</b> Odbiore Cię spod groszka</span>
-        <span><b>Film:</b> Piątek trzynastego ( nw czy to spoko ale data jest zbyt dobra żeby tego nie obejrzeć )</span>
-      </div>
-
-      <figure class="clip">
-        <video controls playsinline preload="metadata" poster="kino.png">
-          <source src="kino.mp4" type="video/mp4">
-          Twoja przeglądarka nie obsługuje wideo.
-        </video>
-        <figcaption>Actual footage z testow</figcaption>
-      </figure>
-
-      <textarea id="note" maxlength="500" placeholder="Możesz zostawić jakąś wiadomość (opcjonalnie)"></textarea>
-      <div class="choices">
-        <button class="btn" data-answer="tak">Lets go!!</button>
-        <button class="btn ghost" data-answer="nie">Nah sorka</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="screen" id="s-yes">
-    <div class="car">🚗</div>
-    <h2>Nahh</h2>
-    <p>Wybrałaś już coś innego :P</p>
-  </section>
-
-  <section class="screen" id="s-no">
-    <h2>No nic</h2>
-    <p>Dzięki tak czy siak :D Dobrej nocki</p>
-  </section>
+<main class="message-box">
+  <form id="messageForm">
+    <textarea id="note" maxlength="1000" placeholder="Napisz wiadomość..." required></textarea>
+    <button id="sendButton" type="submit">Wyślij</button>
+  </form>
 </main>
 
 <script>
   /* ============ USTAWIENIA ============ */
-  const HER_NAME        = "Hejcia ;DD";
-  const WEBHOOK_URL     = "https://discord.com/api/webhooks/1567981536144523294/tr_7zYs6x0IIwg6hK-iJtj9AdY1g_Mf8ykge-SZ0bQ7S419gq5kHPB14QBJ1NVqrC6dI";
-  const PLACEHOLDER_URL = "tooearly.html";
-  const OPEN_HOUR       = 23;
-  const CLOSE_HOUR      = 4;
-  const TZ              = "Europe/Warsaw";
+  const WEBHOOK_URL = "https://discord.com/api/webhooks/1567981536144523294/tr_7zYs6x0IIwg6hK-iJtj9AdY1g_Mf8ykge-SZ0bQ7S419gq5kHPB14QBJ1NVqrC6dI";
+  const OPEN_HOUR = 20;
+  const CLOSE_HOUR = 4;
+  const TZ = "Europe/Warsaw";
   /* ==================================== */
 
-  const $ = s => document.querySelector(s);
   const SID = Math.random().toString(36).slice(2, 8);
+  const $ = selector => document.querySelector(selector);
 
-  const SCREEN_NAMES = {
-    s1: "1 – Powitanie",
-    s2: "2 – Monolog",
-    s3: "3 – Zaproszenie",
-    "s-yes": "4a – Odpowiedź: TAK",
-    "s-no": "4b – Odpowiedź: NIE"
-  };
-
-  /* ---------- czas ---------- */
-  function nowPL(){
-    return new Date().toLocaleString("pl-PL", { timeZone: TZ, dateStyle: "short", timeStyle: "medium" });
-  }
-  function hourPL(){
-    return parseInt(new Intl.DateTimeFormat("en-GB", { timeZone: TZ, hour: "2-digit", hourCycle: "h23" }).format(new Date()), 10);
-  }
-  function isOpen(){
-    const h = hourPL();
-    return OPEN_HOUR < CLOSE_HOUR ? (h >= OPEN_HOUR && h < CLOSE_HOUR) : (h >= OPEN_HOUR || h < CLOSE_HOUR);
-  }
-  function fmtDur(ms){
-    const s = Math.round(ms / 1000);
-    return s < 60 ? s + "s" : Math.floor(s / 60) + "m " + (s % 60) + "s";
+  function nowPL() {
+    return new Date().toLocaleString("pl-PL", {
+      timeZone: TZ, dateStyle: "short", timeStyle: "medium"
+    });
   }
 
-  /* ---------- IP ---------- */
+  function hourPL() {
+    return parseInt(new Intl.DateTimeFormat("en-GB", {
+      timeZone: TZ, hour: "2-digit", hourCycle: "h23"
+    }).format(new Date()), 10);
+  }
+
+  function isOpen() {
+    const hour = hourPL();
+    return OPEN_HOUR < CLOSE_HOUR
+      ? hour >= OPEN_HOUR && hour < CLOSE_HOUR
+      : hour >= OPEN_HOUR || hour < CLOSE_HOUR;
+  }
+
+  function fmtDur(ms) {
+    const seconds = Math.round(ms / 1000);
+    return seconds < 60
+      ? seconds + "s"
+      : Math.floor(seconds / 60) + "m " + (seconds % 60) + "s";
+  }
+
   let userIP = "nieznane";
   const ipReady = (async () => {
     try {
-      const ctrl = new AbortController();
-      const t = setTimeout(() => ctrl.abort(), 3000);
-      const r = await fetch("https://api.ipify.org?format=json", { signal: ctrl.signal });
-      clearTimeout(t);
-      userIP = (await r.json()).ip || "nieznane";
-    } catch (e) { /* adblock / brak sieci */ }
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3000);
+      const response = await fetch("https://api.ipify.org?format=json", {
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+      userIP = (await response.json()).ip || "nieznane";
+    } catch (error) {
+      // Brak sieci lub blokada usługi IP.
+    }
     return userIP;
   })();
 
-  /* ---------- wysyłka na Discorda ---------- */
-  const cut = (v, n = 1000) => { v = String(v ?? "").trim(); return v ? v.slice(0, n) : "—"; };
+  const cut = (value, max = 1000) => {
+    value = String(value ?? "").trim();
+    return value ? value.slice(0, max) : "—";
+  };
 
-  async function log(title, fields = [], color = 0xffd9a0){
+  async function log(title, fields = [], color = 0xffd9a0) {
     const ip = await ipReady;
     const embed = {
       title,
       color,
       fields: [
-        ...fields.map(f => ({ name: f[0], value: cut(f[1]), inline: f[2] !== false })),
+        ...fields.map(field => ({
+          name: field[0],
+          value: cut(field[1]),
+          inline: field[2] !== false
+        })),
         { name: "IP", value: cut(ip), inline: true },
         { name: "Godzina", value: nowPL(), inline: true }
       ],
       footer: { text: "sesja " + SID }
     };
-    if (WEBHOOK_URL.includes("TWOJ-WEBHOOK")) { console.log("[LOG]", title, fields); return; }
+
     try {
       await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ allowed_mentions: { parse: [] }, embeds: [embed] }),
+        body: JSON.stringify({
+          allowed_mentions: { parse: [] },
+          embeds: [embed]
+        }),
         keepalive: true
       });
-    } catch (e) { console.error(e); }
+    } catch (error) {
+      console.error("Nie udało się wysłać logu:", error);
+    }
   }
 
   /* ---------- BLOKADA GODZINOWA ---------- */
-  const open = isOpen();
-  if (!open) {
+  if (!isOpen()) {
     log("⛔ Próba wejścia przed czasem", [
       ["Godzina PL", hourPL() + ":xx"],
       ["Przeglądarka", navigator.userAgent, false]
     ], 0xff4d5e);
-    // daj logowi chwilę na wyjście, potem przekieruj
-    setTimeout(() => location.replace(PLACEHOLDER_URL), 1200);
+
+    // Daj logowi chwilę na wysłanie, a następnie przekieruj na stronę informacyjną.
+    setTimeout(() => location.replace("tooearly.html"), 1200);
   } else {
-    document.getElementById("gate-hide").remove();   // odkryj stronę
-    start();
-  }
+    $("#gate-hide").remove();
 
-  /* ---------- GŁÓWNA LOGIKA ---------- */
-  function start(){
-    document.getElementById("name").textContent = HER_NAME;
-
-    let current = "s1";
-    let screenSince = Date.now();
     const pageSince = Date.now();
-    let answered = false;
+    let hiddenAt = 0;
+    let sent = false;
 
     log("🟢 Weszła na stronę", [
-      ["Ekran", SCREEN_NAMES.s1],
+      ["Godzina otwarcia", OPEN_HOUR + ":00–" + CLOSE_HOUR + ":00"],
       ["Ekran/okno", innerWidth + "×" + innerHeight],
       ["Język", navigator.language],
       ["Przeglądarka", navigator.userAgent, false],
       ["Skąd przyszła", document.referrer || "bezpośrednio"]
     ], 0x57f287);
 
-    function show(id, trigger){
-      const spent = Date.now() - screenSince;
-      const from = current;
+    $("#messageForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      const message = $("#note").value.trim();
+      if (!message || sent) return;
 
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
-      $("#" + id).classList.add("on");
-      if (id === "s2") playLines();
-      if (id !== "s3") { const v = document.querySelector(".clip video"); if (v) v.pause(); }
-      window.scrollTo({ top: 0 });
+      const button = $("#sendButton");
+      button.disabled = true;
+      button.textContent = "Wysyłanie...";
 
-      current = id;
-      screenSince = Date.now();
+      await log("💬 Wysłano wiadomość", [
+        ["Wiadomość", message, false],
+        ["Czas od wejścia na stronę", fmtDur(Date.now() - pageSince)]
+      ], 0x57f287);
 
-      log("➡️ Zmiana ekranu", [
-        ["Z", SCREEN_NAMES[from]],
-        ["Na", SCREEN_NAMES[id]],
-        ["Kliknęła", trigger || "—"],
-        ["Czas na poprzednim ekranie", fmtDur(spent)]
-      ]);
-    }
+      sent = true;
+      $("#note").value = "";
+      button.textContent = "Wysłano";
+    });
 
-    document.querySelectorAll("[data-go]").forEach(b =>
-      b.addEventListener("click", () => show(b.dataset.go, "„" + b.textContent.trim() + "”"))
-    );
-
-    let played = false;
-    function playLines(){
-      if (played) return; played = true;
-      const ps = [...document.querySelectorAll("#lines p")];
-      ps.forEach((p, i) => setTimeout(() => p.classList.add("show"), 500 + i * 1500));
-      setTimeout(() => $("#next2").classList.add("show"), 500 + ps.length * 1500);
-    }
-
-    /* odpowiedź TAK / NIE + wiadomość */
-    document.querySelectorAll("[data-answer]").forEach(b => b.addEventListener("click", () => {
-      const answer = b.dataset.answer;
-      const note = $("#note").value.trim();
-      const spent = Date.now() - screenSince;
-      answered = true;
-
-      log(answer === "tak" ? "✅ ODPOWIEDŹ: TAK" : "❌ ODPOWIEDŹ: NIE", [
-        ["Kliknęła", "„" + b.textContent.trim() + "”"],
-        ["Czas na ekranie zaproszenia", fmtDur(spent)],
-        ["Czas od wejścia na stronę", fmtDur(Date.now() - pageSince)],
-        ["Wiadomość", note || "(brak)", false]
-      ], answer === "tak" ? 0x57f287 : 0xed4245);
-
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
-      $("#" + (answer === "tak" ? "s-yes" : "s-no")).classList.add("on");
-      const v = document.querySelector(".clip video"); if (v) v.pause();
-      window.scrollTo({ top: 0 });
-      current = answer === "tak" ? "s-yes" : "s-no";
-      screenSince = Date.now();
-    }));
-
-    const vid = document.querySelector(".clip video");
-    if (vid) {
-      vid.addEventListener("play",  () => log("▶️ Włączyła filmik", [["Moment filmiku", vid.currentTime.toFixed(1) + "s"]]));
-      vid.addEventListener("pause", () => { if (!vid.ended && current === "s3") log("⏸️ Zatrzymała filmik", [["Moment filmiku", vid.currentTime.toFixed(1) + "s"]]); });
-      vid.addEventListener("ended", () => log("🏁 Obejrzała filmik do końca"));
-    }
-
-    /* wyjście / schowanie karty / powrót */
-    let hiddenAt = 0;
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "hidden") {
         hiddenAt = Date.now();
-        const note = $("#note").value.trim();
         log("👋 Opuściła kartę / zamknęła stronę", [
-          ["Ekran", SCREEN_NAMES[current]],
-          ["Czas na tym ekranie", fmtDur(Date.now() - screenSince)],
           ["Czas od wejścia", fmtDur(Date.now() - pageSince)],
-          ["Niewysłana wiadomość", (!answered && note) ? note : "—", false]
+          ["Niewysłana wiadomość", !sent ? ($("#note").value.trim() || "—") : "—", false]
         ], 0xfee75c);
       } else if (hiddenAt) {
         log("👀 Wróciła na stronę", [
-          ["Ekran", SCREEN_NAMES[current]],
-          ["Nie było jej", fmtDur(Date.now() - hiddenAt)]
+          ["Nie było jej", fmtDur(Date.now() - hiddenAt)],
+          ["Czas od wejścia", fmtDur(Date.now() - pageSince)]
         ], 0x57f287);
         hiddenAt = 0;
       }
     });
   }
 
-  /* ===================================
-     GWIAZDY
-     =================================== */
+  /* ---------- GWIAZDKI ---------- */
   const STAR_CONFIG = {
     count: 200,
     minSize: 1,
@@ -402,38 +279,38 @@
     minOpacity: 0.3,
     maxOpacity: 1,
     twinkleSpeed: 3,
-    twinkleRandomness: 4,
+    twinkleRandomness: 4
   };
-
-  const starsContainer = document.getElementById("stars");
 
   function random(min, max) {
     return Math.random() * (max - min) + min;
   }
 
   function createStars() {
-    starsContainer.querySelectorAll(".star").forEach(star => star.remove());
-
+    const container = $("#stars");
     for (let i = 0; i < STAR_CONFIG.count; i++) {
       const star = document.createElement("div");
       star.className = "star";
 
       const size = random(STAR_CONFIG.minSize, STAR_CONFIG.maxSize);
       const opacity = random(STAR_CONFIG.minOpacity, STAR_CONFIG.maxOpacity);
-      const duration = random(STAR_CONFIG.twinkleSpeed, STAR_CONFIG.twinkleSpeed + STAR_CONFIG.twinkleRandomness);
+      const duration = random(
+        STAR_CONFIG.twinkleSpeed,
+        STAR_CONFIG.twinkleSpeed + STAR_CONFIG.twinkleRandomness
+      );
 
-      star.style.setProperty("--x", `${random(0, 100)}%`);
-      star.style.setProperty("--y", `${random(0, 100)}%`);
-      star.style.setProperty("--size", `${size}px`);
+      star.style.setProperty("--x", random(0, 100) + "%");
+      star.style.setProperty("--y", random(0, 100) + "%");
+      star.style.setProperty("--size", size + "px");
       star.style.setProperty("--opacity", opacity);
-      star.style.setProperty("--twinkle-duration", `${duration}s`);
-      star.style.setProperty("--delay", `${random(0, duration)}s`);
+      star.style.setProperty("--twinkle-duration", duration + "s");
+      star.style.setProperty("--delay", random(0, duration) + "s");
 
-      starsContainer.appendChild(star);
+      container.appendChild(star);
     }
   }
 
-  createStars();
+  if (isOpen()) createStars();
 </script>
 </body>
 </html>
